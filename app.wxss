@@ -1,0 +1,67 @@
+/**app.wxss**/
+
+.container {
+  height: 100%;
+} 
+page,.page {
+  height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, PingFang SC, Source Han Sans CN, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif; 
+   /* font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Droid Sans Fallback', 'Microsoft Yahei', sans-serif;  */
+    
+}
+
+.show-border-bottom{
+ 
+  -moz-box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB; 
+  -webkit-box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB;
+  box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB;
+}
+
+
+.show-border-top{
+ 
+  -moz-box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB; 
+  -webkit-box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB;
+  box-shadow:1px 1px 1px #FBFBFB, 2px 2px 5px #FBFBFB;
+}
+
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,img {padding: 0;margin: 0;text-decoration: none;list-style: none;}
+img {border: 0;display: block;}
+input,textarea {outline: none;}
+a{text-decoration: none;}
+i {font-style: normal;}
+.fl{float: left;}
+.fr {float: right;}
+.clearfix {zoom: 1;}
+.clearfix:after {content: ".";clear: both;display: block;height: 0;font-size: 0;overflow: hidden;visibility: hidden;}
+
+.over {overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+img{display: inline-block;border: none;}
+
+
+/*兼容bootstrap共用*/
+.row,.col-xs-3,.col-xs-7,.col-xs-2,.col-xs-5{
+  margin: 0!important;
+  padding: 0!important;
+}
+
+.moreLing{
+   display: block;
+   height: 80rpx;
+   line-height: 80rpx;
+   font-size: 14pt;
+   color:  #b2b2b2;
+   width: 100%;
+   text-align: center;
+}
+
+
+
+.gradient{
+   filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150)    progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ff9a9e,endcolorstr=#fad0c4,gradientType=0);
+   -ms-filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr= #ff9a9e,endcolorstr=#fad0c4,gradientType=0);/*IE8*/
+   background:#ff9a9e; /* 一些不支持背景渐变的浏览器 */
+   background:-moz-linear-gradient(top, #ff9a9e,#fad0c4);
+   background:-webkit-gradient(linear, 0 0, 0 bottom, from(#ff9a9e), to(#fad0c4));
+   background:-o-linear-gradient(top, #ff9a9e, #fad0c4);
+ }

@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+ 
+  <view class="userinfo"  >
+     <block >
+       <image  class="userinfo-avatar" src="../../img/qrcode.png" background-size="cover"></image>
+       <text class="userinfo-mail">E-mail ：dian_note@163.com</text>
+       <text class="userinfo-mail">BLOG ：https://note.sufer666.top</text>
+       <text class="userinfo-nickname"> 做最好的自己 ，然后遇见你</text>
+    </block>  
+  </view>
+</view>

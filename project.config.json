@@ -1,0 +1,61 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.9.98",
+	"appid": "wx0a8e313e72f8b751",
+	"projectname": "%E4%B8%80%E7%82%B9%E6%96%87%E7%AB%A0",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "main",
+					"pathName": "pages/main/main",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "list",
+					"pathName": "pages/art/list",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "collect",
+					"pathName": "pages/collect/list",
+					"query": ""
+				}
+			]
+		}
+	}
+}

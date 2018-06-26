@@ -1,0 +1,108 @@
+<!--pages/main/main.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="container ">
+    <view class="page">
+    
+       <view class="page-bottom">
+        <view class="page-content">
+             <view class="userinfo" >
+              <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+              <p class="userinfo-nickname">{{userInfo.nickName}}</p>
+
+            </view>
+              <view  class="wc " bindtap="menuTap" data-type='1'>
+                <text>历史</text>
+            </view>
+            <view  class="wc " bindtap="menuTap" data-type='2'>
+                <text>收藏</text>
+            </view>
+        
+            <view  class="wc " bindtap="menuTap" data-type='3'>
+                <text>关于</text>
+            </view>
+            
+        </view>
+       </view>
+   
+
+    <view  bindtouchmove="tap_drag" bindtouchend="tap_end"   class="page-top {{translate}}" >
+       <view class='top-img show-border-bottom'  bindtap="tap_ch">
+          <image  src="../../img/category.png"></image>
+       </view> 
+       
+         <view wx:if="{{titCon.img}}" class='main-tit-img'>
+             <image  src="{{titCon.img}}"></image>
+        </view> 
+        <!--主题内容 start-->
+       <view class='main-List'>
+      
+         <text wx:if="{{titCon.title}}" class='main-title' >{{titCon.title}}</text>
+         <text wx:if="{{ titCon.date }}" class='main-auther' >{{ titCon.entry_date }}</text>
+         <text wx:if="{{borwer_num }}" class='main-auther' >阅读 {{ borwer_num }}</text>
+           <view class='main-con-li'>
+             <template is="wxParse" data="{{wxParseData:article.nodes}}"/> 
+           </view>
+          
+          <view  wx:if='{{endFlag}}'>  
+           <view class='end-tit'>
+            <text>THE  END</text>
+           </view>
+          <view  class='end-tit-bottom'>
+          </view>
+          
+          </view>
+          
+
+             <view class='text-conlist'>
+              <view class='text-con clearfix' wx:for='{{momentData}}' wx:key="key">
+                  <view wx:if='{{item.avatar_url}}' class='text-con-left' >
+                      <image  src='{{item.avatar_url}}'></image>   
+                  </view>
+                  <view class='text-con-right' >
+                    <view>
+                      <text class='textfz'>{{item.nick_name}}  {{item.entry_date}}</text>
+                    </view>
+                      <view>
+                      <text>{{item.reply}}</text>
+                    </view>
+                  </view>
+              </view>
+           </view>  
+         
+       </view>
+        <!--主题内容 end-->
+          <view wx:if='{{bottomMenu}}' class='main-bottom'>
+             <view class='bottom-li' bindtap='collectTap' data-menutype='1'>
+                <image class='bottom-img' src='{{collect}}'/>
+             </view> 
+              <view class='bottom-li' bindtap='collectTap' data-menutype='2'>
+                <image class='bottom-img' src='../../img/pinglun.png'/>
+             </view>
+              <view class='bottom-li'  >
+               <button class='share-cla'  open-type="share"></button>
+             </view>
+               <view class='bottom-li' bindtap='collectTap' data-menutype='4'>
+                <image class='bottom-img' src='{{userInfo.avatarUrl}}'/>
+             </view>
+          </view>
+
+         
+    </view> 
+    
+    <!--评论 start-->
+         <view class='moment-con'  wx:if='{{mommentFlag}}'>
+           <!-- <textarea class='moment-text show-border-top' placeholder="请输入评论" data-art_id="{{ titCon.art_id }}" adjust-position='true'             bindconfirm='textBind' show-confirm-bar='true'  focus="true" />
+             <view class="btn-area">
+              <button bindtap="bindButtonTap">使得输入框获取焦点</button>
+            </view>  -->
+            <form bindsubmit="bindFormSubmit" data-art_id="{{ titCon.art_id }}">
+                 <textarea  class='moment-text show-border-top' maxlength='140' data-art_id="{{ titCon.art_id }}" auto-focus      placeholder="请输入评论"  name="textarea"/>
+                 <button class='common-btn' form-type="submit"> 提交 </button>
+          </form>
+         </view>
+     <!--评论 end-->
+   
+
+
+  </view>
+</view>

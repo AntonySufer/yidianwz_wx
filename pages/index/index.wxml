@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<view class="container">
+  <loading hidden="{{!loading}}" />
+   <view class='note-text'>
+   <text>   {{noteText}}</text>
+  </view>
+  <view class="userinfo"  >
+      <button class='button-cla'    open-type="getUserInfo" bindgetuserinfo="getUser"  wx:if="{{!hasUserInfo && canIUse}}">点击阅读</button>
+     <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">欢迎 {{userInfo.nickName}}</text>
+    </block>  
+  </view>
+ 
+</view>

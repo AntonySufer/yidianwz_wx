@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/main/main",
+    "pages/art/list",
+    "pages/collect/list",
+    "pages/yidian/yidian"
+   
+  ],
+  "window": {
+    "navigationBarTitleText": "一点文章",
+    "backgroundColor": "#eeeeee"
+  },
+
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

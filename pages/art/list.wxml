@@ -1,0 +1,19 @@
+<!--pages/art/list.wxml-->
+<view class="container ">
+ <view class="page">
+
+    <loading hidden="{{!loading}}" />
+    <scroll-view class="page-body" scroll-y="true" style="height:{{scroll_height}}px;" lower-threshold="80" upper-threshold="80" 
+        bindscrolltoupper="upper" bindscrolltolower="lower"  scroll-into-view=""  scroll-top="80">      
+            <view class='con-li clearfix' wx:for="{{textData}}" wx:key="key">
+               <navigator class='li-first' url='/pages/main/main?art_id={{item.art_id}}' open-type="navigate" hover-class="navigator-hover">
+                       <text >{{item.title}}</text>
+                       <text >{{item.entry_date}}</text>  
+                </navigator> 
+               
+             </view> 
+        <text class='moreLing' wx:if="{{moreLing}}">{{moreLing_text}}</text>
+    </scroll-view>
+ 
+  </view>
+</view>
