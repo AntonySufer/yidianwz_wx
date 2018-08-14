@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     motto: '一点文章',
-    userInfo: {},
+    userInfo: '',
     noteText:'',
     art_id:'',
     hasUserInfo: false,
@@ -22,10 +22,11 @@ Page({
       noteText: ''
     });
     this.getNote();
+    let _this = this ;
     if (this.data.hasUserInfo && this.data.userInfo ){
       setTimeout(function(){
-        wx.navigateTo({ url: '../main/main?art_id=' + this.data.art_id});
-      },1000)
+       // wx.navigateTo({ url: '../main/main?art_id=' + _this.data.art_id});
+      },3000)
     
     }
   },
@@ -46,7 +47,7 @@ Page({
         hasUserInfo: true
        
       });
-      wx.navigateTo({ url: '../main/main?art_id=' + art_id  });
+      wx.navigateTo({ url: '../main/main?art_id=' + art_id });
     } else if (this.data.canIUse){
       //console.log('222222222222222222222222222222');
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回

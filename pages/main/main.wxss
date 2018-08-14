@@ -225,4 +225,19 @@
    transform: rotate(0deg) scale(1) translate(0%,0%); 
   -webkit-transform: rotate(0deg) scale(1) translate(0%,0%); 
 }
+
+.share-con{
+  position: absolute;
+  z-index: 999;
+  border: 1rpx solid #F8F8F8; 
+  bottom:40px;
+  border-radius: 2rpx;
+}
+
+.share-con > button{
+   color: #333;
+  background:#fff !important;
+  border: 1rpx solid  #F8F8F8; 
+  border-radius: 0 !important;
+}
  

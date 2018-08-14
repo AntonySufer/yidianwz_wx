@@ -1,43 +1,68 @@
 // pages/main/main.js
 const app = getApp()
 var WxParse = require('../../wxParse/wxParse.js');
+var utils = require("../../utils/util.js");
 Page({
   data: {
     open: false,
     mark: 100, //滑动距离
+    shareList:["朋友圈","好友"],
+    isShareShow:false,
     newmark:'',
+    qcodeUrl:'',
     windowWidth: wx.getSystemInfoSync().windowWidth,
     staus: 1,
     translate: '', //默认不展开
     click_type:'', //点击事件
     userInfo: {},
-    titCon: [], //文章内容
+    titCon: {}, //文章内容
     momentData:[],//评论内容
     collect:'../../img/cli.png',
     collect_type: '1',
     bottomMenu:false,//菜单
     endFlag:false,
     mommentFlag:false, //评论
-    borwer_num:'' //流量
+    borwer_num:'', //流量
+    shareTwo: {
+      avatar: '',
+      nickname: '',
+      incomeMoney: '',
+      joinNumber: '',
+      joinAvatarList: '',
+      adImageUrl: '',
+      adName: '',
+      ermUrlPath:'pages/main/main',
+      adTime: '',
+      showShareModel: false
+    },
   
   },
   onLoad:function(res){
+    console.log(res);
+    let arr  = Object.keys(app.globalData.userInfo);
+  
+    if (arr.length == 0){
+      arr ={};
+    }
     this.setData({
-      userInfo: app.globalData.userInfo
+      userInfo: arr
     })
-    // console.log('res.art_id');
-    // console.log(res.art_id);
+     console.log('res.art_id');
+     console.log(res);
     //获取文章内容
+    if (!res){
+      res={};
+     }
     this.getDataList(res.art_id||'');
+    //this.shareFriend();
   },
   /**
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
+    
     this.setData({
       userInfo: app.globalData.userInfo,
-      titCon: [],
-      momentData:[],
       bottomMenu: true//菜单
     })
     
@@ -84,6 +109,10 @@ Page({
 
   getDataList: function (art_id) {
    var that = this ;
+    that.setData({
+      titCon: {},
+      momentData: []
+    });
     wx.request({
       method:'POST',
       data: { "openid": wx.getStorageSync('openid'), 'art_id': art_id},
@@ -170,6 +199,13 @@ Page({
         mommentFlag:true
       });
       
+    } else if (type == '3') {
+      //////console.log(1);
+      let isShow = this.data.isShareShow ? false:true;
+      this.setData({
+        isShareShow: isShow
+      });
+
     }else{
       wx.showToast({
         title: '努力开发中...',
@@ -244,7 +280,7 @@ Page({
     wx.request({
       method: 'POST',
       data: { "openid": wx.getStorageSync('openid'), 'art_id': art_id,"text":text},
-      url: app.globalData.requestUrl + 'yidian-up_art_moment', //仅为示例，并非真实的接口地址
+      url: app.globalData.requestUrl + 'yidian-up_art_moment',
       success: function (res) {
      
         if (res.statusCode != 200) {
@@ -286,6 +322,9 @@ Page({
       // 来自页面内转发按钮
     
     }
+    that.setData({
+      isShareShow:false
+    })
     ////console.log(2222);
     return {
       title: that.data.titCon.title,
@@ -301,6 +340,10 @@ Page({
       },
       fail: function (res) {
         // 转发失败
+        console.log('22222222222');
+        that.setData({
+          isShareShow: false
+        });
       }
     }
   },
@@ -336,6 +379,77 @@ Page({
     }
   
   },
+  /*下载动态二维码地址**/
+  getAccToken(){
+    let _this = this ;
+    if (!this.data.titCon.art_id){
+      wx.showToast({ title: '出错了,请重试', icon: 'none', duration: 2000, mask: false });
+      return false;
+    }
+    let userInfo = this.data.userInfo;
+    if (!userInfo){
+      wx.showToast({ title: '请先登录', icon: 'none', duration: 2000, mask: false });
+      wx.redirectTo({ url: '../index/index' }); //收藏列表
+      return false;
+    }
+
+
+
+    wx.request({
+      method: 'POST',
+      data: { 'ermUrlPath': "pages/main/main?art_id=" + this.data.titCon.art_id, "art_id": this.data.titCon.art_id },
+      url: app.globalData.requestUrl + 'yidian-getNewQcode', //
+      success: function (res) {
+        if (res.statusCode != 200) {
+          wx.showToast({ title: '出错啦', icon: 'none', duration: 2000, mask: false });
+          return false;
+        }
+        var resu = res.data;
+        if (!resu.urlData.imgurl){
+          wx.showToast({ title: '获取程序码失败！', icon: 'none', duration: 2000, mask: false });
+          return false;
+        }
+        _this.shareFriend(resu.urlData.imgurl);
+        if (resu.code != 200) {
+          wx.showToast({ title: '出错啦', icon: 'none', duration: 2000, mask: false });
+          return false;
+        }
+       
+    
+      }
+    })
+  },
+ 
+
+  /**朋友圈 */
+  shareFriend: function (qcodeURL) {
+    let userInfo = this.data.userInfo;
+    let defaultImg = '../../11.jpg';
+    userInfo.avatarUrl = userInfo.avatarUrl ? userInfo.avatarUrl : defaultImg;
+    userInfo.nickName = userInfo.nickName ? userInfo.nickName : '一点 ';
+    
+    let title = this.data.titCon.title.length > 19 ? this.data.titCon.title.substr(0, 15)+'...' : this.data.titCon.title;
+    
+    let adImg = this.data.titCon.ad_img ? this.data.titCon.ad_img :"../../img/img3.jpg";
+  
+    this.setData({
+      isShareShow: false,
+      shareTwo: {
+        avatar: userInfo.avatarUrl,
+        nickname: userInfo.nickName,
+        incomeMoney: this.data.borwer_num ? this.data.borwer_num : 6888, //阅读
+        joinNumber: '0',
+        joinAvatarList: [],
+        ermUrlPath: qcodeURL, //动态二维码地址
+        adImageUrl: adImg, //广告地址
+        adName: title, //文章名称
+        adTime: utils.formatTime(new Date()),
+        showShareModel: true
+      }
+    })
+
+  },
+
   tap_end: function (e) {
 
   }

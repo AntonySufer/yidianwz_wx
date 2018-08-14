@@ -37,7 +37,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null,
-     requestUrl: 'http://127.0.0.1:8080/wx.post?func='
+    userInfo: '',
+    requestUrl: 'https://begin888.cn/wx.post?func='
+    // requestUrl: 'http://192.168.1.202:8080/wx.post?func='
   }
 })

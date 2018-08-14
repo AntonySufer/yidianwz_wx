@@ -1,8 +1,23 @@
 <!--pages/main/main.wxml-->
 <import src="../../wxParse/wxParse.wxml"/>
 <view class="container ">
+<!-- 样式二 -->
+  <share-two 
+    avatar='{{ shareTwo.avatar }}'
+    nickname='{{ shareTwo.nickname }}'
+    incomeMoney='{{ shareTwo.incomeMoney }}'
+    joinNumber='{{ shareTwo.joinNumber }}'
+    joinAvatarList='{{ shareTwo.joinAvatarList }}'
+    adImageUrl='{{ shareTwo.adImageUrl }}'
+    ermUrlPath='{{shareTwo.ermUrlPath}}'
+    adName='{{ shareTwo.adName }}'
+    adTime='{{ shareTwo.adTime }}'
+    showShareModel='{{ shareTwo.showShareModel }}'
+  ></share-two>
+  
+  <!-- 样式二 -->
     <view class="page">
-    
+   
        <view class="page-bottom">
         <view class="page-content">
              <view class="userinfo" >
@@ -78,8 +93,12 @@
               <view class='bottom-li' bindtap='collectTap' data-menutype='2'>
                 <image class='bottom-img' src='../../img/pinglun.png'/>
              </view>
-              <view class='bottom-li'  >
-               <button class='share-cla'  open-type="share"></button>
+              <view class='bottom-li' bindtap='collectTap' data-menutype='3' style="position:relative"  >
+               <button class='share-cla'></button>
+               <view class='share-con' wx:if='{{isShareShow}}' > 
+                  <button  open-type="share">好友</button>
+                  <button bindtap='getAccToken' >朋友圈</button>
+               </view>
              </view>
                <view class='bottom-li' bindtap='collectTap' data-menutype='4'>
                 <image class='bottom-img' src='{{userInfo.avatarUrl}}'/>
@@ -103,6 +122,6 @@
      <!--评论 end-->
    
 
-
-  </view>
+ </view>
+   
 </view>
