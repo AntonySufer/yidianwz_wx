@@ -2,9 +2,14 @@
 const app = getApp()
 var WxParse = require('../../wxParse/wxParse.js');
 var utils = require("../../utils/util.js");
+     utils.checkVersion();
+
+
+
 Page({
   data: {
     open: false,
+    loading:true,
     mark: 100, //滑动距离
     shareList:["朋友圈","好友"],
     isShareShow:false,
@@ -21,8 +26,10 @@ Page({
     collect_type: '1',
     bottomMenu:false,//菜单
     endFlag:false,
+    scroll_height:500,
     mommentFlag:false, //评论
     borwer_num:'', //流量
+    isShowBottom:false,
     shareTwo: {
       avatar: '',
       nickname: '',
@@ -38,30 +45,44 @@ Page({
   
   },
   onLoad:function(res){
-    console.log(res);
-    let arr  = Object.keys(app.globalData.userInfo);
-  
-    if (arr.length == 0){
-      arr ={};
+    //获取文章内容
+    if (!res) {
+      res = {};
     }
+
+    let arr  = Object.keys(app.globalData.userInfo);
+    if (arr.length == 0){
+      let art_id = res.art_id || '';
+      wx.navigateTo({ url: '../index/index?art_id=' + art_id });
+      return;
+    }
+  
     this.setData({
       userInfo: arr
     })
-     console.log('res.art_id');
-     console.log(res);
-    //获取文章内容
-    if (!res){
-      res={};
-     }
+   
     this.getDataList(res.art_id||'');
+
+
     //this.shareFriend();
   },
   /**
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-    
-    this.setData({
+    var that = this;
+    //获取数据
+    wx.getSystemInfo({
+      success: function (res) {
+        // 计算主体部分高度,单位为px
+        that.setData({
+          // second部分高度 = 利用窗口可使用高度 - first部分高度（这里的高度单位为px，所有利用比例将300rpx转换为px）
+          scroll_height: Number(res.windowHeight)
+        })
+      }
+    })
+
+    that.setData({
       userInfo: app.globalData.userInfo,
       bottomMenu: true//菜单
     })
@@ -119,7 +140,7 @@ Page({
       url: app.globalData.requestUrl +'yidian-get_index_article', //仅为示例，并非真实的接口地址
       success: function (res) {
         that.setData({
-          bottomMenu: true
+          loading:false,
         });
         ////console.log(res);
         if (res.statusCode !=200){
@@ -167,6 +188,20 @@ Page({
    
     
   },
+  /*滚动条*/ 
+  scrollFunc:function(e){
+    // let scrollHeight = e.detail.scrollHeight;
+    // let scrollTop = e.detail.scrollTop;
+    // console.log(scrollHeight, scrollTop);
+    // if (Number(scrollTop) + 1000 >= Number(scrollHeight) ){
+    //   console.log("isShowBottom");
+    //   this.setData({
+    //     isShowBottom: true
+    //   });
+    // }
+
+  },
+
   //菜单点击 主菜单
   menuTap:function(e){
    
@@ -331,11 +366,15 @@ Page({
       path: '/pages/index/index?art_id=' + that.data.titCon.art_id,
       success: function (res) {
         // 转发成功
+        that.setData({
+          isShareShow: false
+        })
         wx.showToast({
           title: '分享成功',
           icon: 'success',
           duration: 2000,
           mask: false
+         
         })
       },
       fail: function (res) {
@@ -405,16 +444,18 @@ Page({
           return false;
         }
         var resu = res.data;
-        if (!resu.urlData.imgurl){
-          wx.showToast({ title: '获取程序码失败！', icon: 'none', duration: 2000, mask: false });
-          return false;
-        }
-        _this.shareFriend(resu.urlData.imgurl);
         if (resu.code != 200) {
           wx.showToast({ title: '出错啦', icon: 'none', duration: 2000, mask: false });
           return false;
         }
-       
+        if (!resu.urlData.imgurl){
+          wx.showToast({ title: '获取程序码失败！', icon: 'none', duration: 2000, mask: false });
+          return false;
+        }
+        
+        setTimeout(()=>{ //防止服务器图片还未缓存完
+          _this.shareFriend(resu.urlData.imgurl);
+        },500);
     
       }
     })
@@ -443,7 +484,7 @@ Page({
         ermUrlPath: qcodeURL, //动态二维码地址
         adImageUrl: adImg, //广告地址
         adName: title, //文章名称
-        adTime: utils.formatTime(new Date()),
+        adTime: this.data.titCon.date,
         showShareModel: true
       }
     })

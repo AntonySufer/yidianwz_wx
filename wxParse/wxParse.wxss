@@ -19,6 +19,7 @@
 }
 view{
     word-break:break-all; 
+    -webkit-overflow-scrolling: touch;
     /* overflow:auto; */
 }
 .wxParse-inline{

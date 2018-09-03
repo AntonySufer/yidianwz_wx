@@ -1,6 +1,7 @@
 <!--pages/main/main.wxml-->
 <import src="../../wxParse/wxParse.wxml"/>
 <view class="container ">
+ <loading hidden="{{!loading}}" />
 <!-- 样式二 -->
   <share-two 
     avatar='{{ shareTwo.avatar }}'
@@ -39,74 +40,86 @@
         </view>
        </view>
    
-
+  
     <view  bindtouchmove="tap_drag" bindtouchend="tap_end"   class="page-top {{translate}}" >
        <view class='top-img show-border-bottom'  bindtap="tap_ch">
           <image  src="../../img/category.png"></image>
        </view> 
-       
+      <scroll-view class="page-body" scroll-y="true" style="height:{{scroll_height}}px;" lower-threshold="20" upper-threshold="80" 
+         scroll-into-view=""  bindscroll="scrollFunc" scroll-top="80">
          <view wx:if="{{titCon.img}}" class='main-tit-img'>
              <image  src="{{titCon.img}}"></image>
-        </view> 
+         </view> 
+         
         <!--主题内容 start-->
        <view class='main-List'>
       
-         <text wx:if="{{titCon.title}}" class='main-title' >{{titCon.title}}</text>
-         <text wx:if="{{ titCon.date }}" class='main-auther' >{{ titCon.entry_date }}</text>
-         <text wx:if="{{borwer_num }}" class='main-auther' >阅读 {{ borwer_num }}</text>
-           <view class='main-con-li'>
-             <template is="wxParse" data="{{wxParseData:article.nodes}}"/> 
-           </view>
-          
-          <view  wx:if='{{endFlag}}'>  
-           <view class='end-tit'>
-            <text>THE  END</text>
-           </view>
-          <view  class='end-tit-bottom'>
-          </view>
-          
-          </view>
+          <text wx:if="{{titCon.title}}" class='main-title' >{{titCon.title}}</text>
+          <text wx:if="{{ titCon.date }}" class='main-auther' >{{ titCon.entry_date }}</text>
+          <text wx:if="{{borwer_num }}" class='main-auther' >阅读 {{ borwer_num }}</text>
+            <view class='main-con-li'>
+              <template is="wxParse" data="{{wxParseData:article.nodes}}"/> 
+            </view>
+            
+            <view  wx:if='{{endFlag}}'>  
+              <view class='end-tit'>
+                <text>THE  END</text>
+              </view>
+            <view  class='end-tit-bottom'></view>
+            
+            </view>
           
 
              <view class='text-conlist'>
-              <view class='text-con clearfix' wx:for='{{momentData}}' wx:key="key">
-                  <view wx:if='{{item.avatar_url}}' class='text-con-left' >
-                      <image  src='{{item.avatar_url}}'></image>   
-                  </view>
+               <view class='text-con clearfix' wx:for='{{momentData}}' wx:key="key">
+                    <view wx:if='{{item.avatar_url}}' class='text-con-left' >
+                        <image  src='{{item.avatar_url}}'></image>   
+                    </view>
                   <view class='text-con-right' >
-                    <view>
-                      <text class='textfz'>{{item.nick_name}}  {{item.entry_date}}</text>
-                    </view>
                       <view>
-                      <text>{{item.reply}}</text>
-                    </view>
+                        <text class='textfz'>{{item.nick_name}}  {{item.entry_date}}</text>
+                      </view>
+                        <view>
+                        <text>{{item.reply}}</text>
+                       </view>
                   </view>
-              </view>
+               </view>
            </view>  
          
-       </view>
-        <!--主题内容 end-->
-          <view wx:if='{{bottomMenu}}' class='main-bottom'>
-             <view class='bottom-li' bindtap='collectTap' data-menutype='1'>
+        </view>
+
+         <view wx:if='{{bottomMenu }}' class='main-bottom' >
+              <view class='bottom-li' bindtap='collectTap' data-menutype='1'>
                 <image class='bottom-img' src='{{collect}}'/>
-             </view> 
+              </view> 
               <view class='bottom-li' bindtap='collectTap' data-menutype='2'>
                 <image class='bottom-img' src='../../img/pinglun.png'/>
-             </view>
-              <view class='bottom-li' bindtap='collectTap' data-menutype='3' style="position:relative"  >
-               <button class='share-cla'></button>
-               <view class='share-con' wx:if='{{isShareShow}}' > 
-                  <button  open-type="share">好友</button>
-                  <button bindtap='getAccToken' >朋友圈</button>
-               </view>
-             </view>
-               <view class='bottom-li' bindtap='collectTap' data-menutype='4'>
-                <image class='bottom-img' src='{{userInfo.avatarUrl}}'/>
-             </view>
-          </view>
+              </view>
+                <view class='bottom-li' bindtap='collectTap' data-menutype='3' style="position:relative"  >
+                    <button class='share-cla'></button>
+                  <view class='share-con' wx:if='{{isShareShow}}' > 
+                      <button  open-type="share">好友</button>
+                      <button bindtap='getAccToken' >朋友圈</button>
+                  </view>
+                </view>
+                <view class='bottom-li' bindtap='collectTap' data-menutype='4'>
+                  <image class='bottom-img' src='{{userInfo.avatarUrl}}'/>
+                </view>
+         </view>
 
+         <view class='bottom-fiex'>
          
+         </view>
+
+
+    
+        <!--主题内容 end-->
+      </scroll-view>
+  
     </view> 
+         
+
+   
     
     <!--评论 start-->
          <view class='moment-con'  wx:if='{{mommentFlag}}'>

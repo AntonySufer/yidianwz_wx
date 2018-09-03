@@ -1,6 +1,9 @@
 /* pages/main/main.wxss */
 
 @import "/wxParse/wxParse.wxss";
+
+
+
 .page-bottom{
   height: 100%;
   width: 750rpx;
@@ -52,13 +55,16 @@
   position: fixed;
   width: 100%;
   background-color: #fff;
+  -webkit-overflow-scrolling: touch;
   z-index: 0;
   transition: All 0.4s ease; 
   -webkit-transition: All 0.4s ease;
   overflow-y: auto;
 }
-.page-top .top-img{
+
+ .page-top>.top-img{ 
   position: fixed;
+  z-index: 9999;
   background: #fff;
   border-bottom: 2rpx solid #FBFBFB;
   padding-top:20rpx; 
@@ -72,6 +78,7 @@
 }
 .main-List{
    overflow: auto ;
+  -webkit-overflow-scrolling: touch;
    width: 100%;
    padding: 0 0;
    padding-top: 10rpx;
@@ -93,7 +100,7 @@
   font-size: 11pt;
 }
 .main-tit-img{
-    margin-top:100rpx;
+    margin-top: 80rpx;
     padding: 0rpx 30rpx 0 30rpx;
     text-align: center;
 }
@@ -108,11 +115,14 @@
    padding: 10rpx 30rpx 50rpx 30rpx;
     overflow:auto !important ;
     font-size: 18pt ;
+    -webkit-overflow-scrolling: touch !important;
     color: #353535;
+
  }
 
+
+
  .main-bottom{
-   position: relative;
    width:750rpx;
    z-index: 999;
    display: flex;
@@ -239,5 +249,9 @@
   background:#fff !important;
   border: 1rpx solid  #F8F8F8; 
   border-radius: 0 !important;
+}
+.bottom-fiex{
+  height: 5rpx;
+  background: #fff;
 }
  

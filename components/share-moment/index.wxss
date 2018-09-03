@@ -50,7 +50,7 @@
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 44rpx;
-  margin-top: 40rpx;
+  margin-top: 25rpx;
   color: #ffffff;
   font-size: 32rpx;
   border: none;

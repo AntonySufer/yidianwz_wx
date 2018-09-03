@@ -38,7 +38,7 @@ App({
   },
   globalData: {
     userInfo: '',
-    requestUrl: 'https://begin888.cn/wx.post?func='
-    // requestUrl: 'http://192.168.1.202:8080/wx.post?func='
+    requestUrl: 'https://yidianwz.com/wx.post?func='
+    //requestUrl: 'http://192.168.1.202:8080/wx.post?func='
   }
 })

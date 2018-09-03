@@ -143,9 +143,9 @@ Component({
    */
   data: {
     detailStr: {
-      invite: '在疯狂打call',
+      invite: '推荐好文',
       bpbMini: '长按识别小程序',
-      clickToMini: '(一点文章)',
+      clickToMini: '(开始阅读)',
       incomeTitle: '最近阅读：',
       timeTitle: '最近更新：',
       joinTitle: ''
